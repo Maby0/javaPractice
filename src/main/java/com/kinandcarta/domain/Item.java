@@ -6,7 +6,7 @@ package com.kinandcarta.domain;
 public class Item {
 
     // Define a private field for the item id.
-
+    
     // Define a private field for the item description.
 
     // Define a private field for the price.
