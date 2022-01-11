@@ -5,6 +5,7 @@ import com.kinandcarta.domain.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.*;
 
 /**
  * The default implementation of a {@link Checkout}.  This means that all the methods defined in
@@ -15,32 +16,18 @@ import java.util.List;
  */
 public class CheckoutImpl implements Checkout {
 
-    // We want to define the kinds of things a user can purchase.  So add a field here that lets us look
-    // up an Item based on the item id (a String).  You'll probably want to use one of the Java collection
-    // classes (https://www.javatpoint.com/collections-in-java) to make a mapping (hint, hint) between
-    // the item id String and an Item instance.  It should have the word 'private' in front of it, as we
-    // don't want this field to be visible from other classes.
-
     private static HashMap<String, Item> allItems = new HashMap<String, Item>(){{
         put("0001", new Item("0001", "Water Bottle", 2495));
         put("0002", new Item("0002", "Hoodie", 6500));
         put("0003", new Item("0003", "Sticker Set", 399));
     }};
 
-    // Create another field that will hold the scanned item ids (i.e. the basket).  This should be private
-    // as well.
-
     private List<String> basket = new ArrayList<>();
+
+    private int total;
 
     @Override
     public void scan(List<String> itemIds) {
-
-        // Loop through the list of itemIds.  Then, for each item id:
-
-        // 1. Verify the item id is one that we know about (i.e. check it against the field that defines item types).
-        // If it's not, throw a new RuntimeException.
-
-        // 2. Add the item id to the list of scanned items.  We'll compute the total later when requested.
         for (String item : itemIds) {
             if (allItems.get(item) != null) {
                 basket.add(item);
@@ -48,23 +35,20 @@ public class CheckoutImpl implements Checkout {
                 throw new RuntimeException("Cannot recognise Item ID");
             }
         }
-        // As the return type of the method is 'void', there's no need to return anything.
     }
 
     @Override
     public int getTotal() {
+        if (total > 0 || this.basket.isEmpty()) return total;
 
-        // Initially items are just defined as some number of pence, an int.  So our total can be an int as well.
-        int total = 0;
+//        for (String item : basket) {
+//            total += allItems.get(item).getPrice();
+//        }
 
-        // Loop through the scanned item ids.
-        // For each one, look up its price and add it to the total.
-        for (String item : basket) {
-            total += allItems.get(item).getPrice();
-        }
+        total = basket.stream()
+                .mapToInt(itemId -> allItems.get(itemId).getPrice())
+                .sum();
         // At a later point we'll want to apply the discounts at this point, but you can skip this for now.
-
-        // Finally, return the total.
         return total;
     }
 }

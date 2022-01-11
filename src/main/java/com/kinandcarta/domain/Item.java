@@ -3,7 +3,7 @@ package com.kinandcarta.domain;
 /**
  * Defines an item that can be purchased from the store.
  */
-public class Item {
+public class Item implements ItemInterface {
 
     // Define a private field for the item id.
     private String id;

@@ -30,6 +30,21 @@ public class CheckoutImplTest {
         assertEquals(2894, checkout.getTotal(), "Total incorrect");
     }
 
+    @Test
+    public void testWithoutDiscounts2() {
+        Checkout checkout = new CheckoutImpl();
+        checkout.scan(Arrays.asList("0003", "0003", "0003"));
+        assertEquals(1197, checkout.getTotal(), "Total incorrect");
+    }
+
+    @Test
+    public void testWithoutItems() {
+        // Empty array should return a total cost of zero.
+        Checkout checkout = new CheckoutImpl();
+        checkout.scan(Arrays.asList());
+        assertEquals(0, checkout.getTotal(), "Total incorrect");
+    }
+
 //    /**
 //     * Test the examples that are contained in the exercise description.
 //     */
