@@ -1,5 +1,9 @@
 package com.kinandcarta.exercise;
 
+import com.kinandcarta.domain.Item;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,10 +21,12 @@ public class CheckoutImpl implements Checkout {
     // the item id String and an Item instance.  It should have the word 'private' in front of it, as we
     // don't want this field to be visible from other classes.
 
+    private HashMap<String, Item> allItems = new HashMap<String, Item>();
 
     // Create another field that will hold the scanned item ids (i.e. the basket).  This should be private
     // as well.
 
+    private List<String> basket = new ArrayList<>();
 
     @Override
     public void scan(List<String> itemIds) {
@@ -31,9 +37,13 @@ public class CheckoutImpl implements Checkout {
         // If it's not, throw a new RuntimeException.
 
         // 2. Add the item id to the list of scanned items.  We'll compute the total later when requested.
-
-
-
+        for (String item : itemIds) {
+            if (allItems.get(item) != null) {
+                basket.add(item);
+            } else {
+                throw new RuntimeException("Cannot recognise Item ID");
+            }
+        }
         // As the return type of the method is 'void', there's no need to return anything.
     }
 
