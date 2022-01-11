@@ -21,7 +21,11 @@ public class CheckoutImpl implements Checkout {
     // the item id String and an Item instance.  It should have the word 'private' in front of it, as we
     // don't want this field to be visible from other classes.
 
-    private HashMap<String, Item> allItems = new HashMap<String, Item>();
+    private static HashMap<String, Item> allItems = new HashMap<String, Item>(){{
+        put("0001", new Item("0001", "Water Bottle", 2495));
+        put("0002", new Item("0002", "Hoodie", 6500));
+        put("0003", new Item("0003", "Sticker Set", 399));
+    }};
 
     // Create another field that will hold the scanned item ids (i.e. the basket).  This should be private
     // as well.
@@ -55,7 +59,9 @@ public class CheckoutImpl implements Checkout {
 
         // Loop through the scanned item ids.
         // For each one, look up its price and add it to the total.
-
+        for (String item : basket) {
+            total += allItems.get(item).getPrice();
+        }
         // At a later point we'll want to apply the discounts at this point, but you can skip this for now.
 
         // Finally, return the total.
