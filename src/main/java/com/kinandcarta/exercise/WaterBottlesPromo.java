@@ -3,6 +3,7 @@ package com.kinandcarta.exercise;
 import java.util.Collections;
 import java.util.List;
 
+
 public class WaterBottlesPromo implements PromotionInterface {
     private int basketTotal;
     private List<String> basketContents;

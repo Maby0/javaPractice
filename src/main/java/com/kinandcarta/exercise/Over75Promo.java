@@ -1,11 +1,8 @@
 package com.kinandcarta.exercise;
 
-import java.util.List;
-import java.lang.Integer;
 
 public class Over75Promo implements PromotionInterface {
-
-    private int basketTotal;
+    private final int basketTotal;
     public Over75Promo(int basketTotal) {
         this.basketTotal = basketTotal;
     }

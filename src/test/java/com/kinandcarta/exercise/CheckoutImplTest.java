@@ -1,20 +1,11 @@
 package com.kinandcarta.exercise;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * A simple unit test class to test {@link CheckoutImpl}.
- */
-public class CheckoutImplTest {
 
-    /**
-     * Test that we can use the checkout class to compute a total.  No discounts are
-     * applied in this first step.
-     */
+public class CheckoutImplTest {
     @Test
     public void testWithoutDiscounts() {
 
@@ -45,9 +36,6 @@ public class CheckoutImplTest {
         assertEquals(0, checkout.getTotal(), "Total incorrect");
     }
 
-    /**
-     * Test the examples that are contained in the exercise description.
-     */
     @Test
     public void testExamplesFromExerciseDescription() {
 
