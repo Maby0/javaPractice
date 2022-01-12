@@ -3,9 +3,9 @@ package com.kinandcarta.exercise;
 import com.kinandcarta.domain.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.*;
 
 /**
  * The default implementation of a {@link Checkout}.  This means that all the methods defined in
@@ -41,14 +41,17 @@ public class CheckoutImpl implements Checkout {
     public int getTotal() {
         if (total > 0 || this.basket.isEmpty()) return total;
 
-//        for (String item : basket) {
-//            total += allItems.get(item).getPrice();
-//        }
-
         total = basket.stream()
                 .mapToInt(itemId -> allItems.get(itemId).getPrice())
                 .sum();
-        // At a later point we'll want to apply the discounts at this point, but you can skip this for now.
+
+
+        WaterBottlesPromo waterBottles = new WaterBottlesPromo(total, basket);
+        if (waterBottles.checkForPromotion()) total = waterBottles.applyPromotion();
+
+        Over75Promo over75 = new Over75Promo(total);
+        if (over75.checkForPromotion()) total = over75.applyPromotion();
+
         return total;
     }
 }
